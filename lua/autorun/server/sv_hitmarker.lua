@@ -1,11 +1,6 @@
 AddCSLuaFile("autorun/client/cl_hitmarker.lua")
 include("autorun/sh_hitmarker.lua")
 
-resource.AddFile("resource/fonts/njnaruto.ttf")
-resource.AddFile("resource/fonts/ninjanote.ttf")
-resource.AddFile("sound/phx/hitmarker.wav")
-resource.AddFile("sound/phx/test.wav")
-
 util.AddNetworkString("ShareDamageToAttacker")
 
 hook.Add("EntityTakeDamage", "SendDamageInfoToAttacker", function(target, dmgInfo)
