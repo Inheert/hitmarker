@@ -26,29 +26,28 @@ if (CLIENT) then
     }
 
     // For custom sound, add them in the sound/phx folder and modify the actual path.
-    // (you also need to define a new font in the CLIENT condition just below)
     HITMARKER.hitSound = "phx/hitmarker.wav"
 
-    // Set the actual font for the damage info, see surface.CreateFont() below for more information.
+    // Set the actual font for the damage info, see HITMARKER.fonts below for more information.
     HITMARKER.font = "ninja"
 
-    // To add a new font just add it in this table, you can adjust the key as you want but the value must be the same as the name name in the font viewer.
+    // To add a new font just add it in this table, you can adjust the key as you want but the value must be the same as the font name in the font viewer.
+    // You also need to add the file in the SERVER condition at the end of this file.
     HITMARKER.fonts = {
         ninja = "Ninja Note"
     }
 
     // Used to define all font sizes, this key is scalable, for example if you have 3 values in it (20, 40, 60) so the damage display will work like this:
-    // if distance is in 1/3 maxDistance then damage text size = 20
+    // if distance is in 1/3 maxDistance then damage text size = 60
     // if distance is in 2/3 maxDistance then damage text size = 40
-    // if distance is in 3/3 maxDistance then damage text size = 60
+    // if distance is in 3/3 maxDistance then damage text size = 20
     // Fraction adapts to table size
-    HITMARKER.fontSizes = {100, 60, 40, 20}
+    HITMARKER.fontSizes = {80, 60, 40, 20}
 
     // Just to avoid useless calculation
     HITMARKER.fontSizesCount = #HITMARKER.fontSizes
 
-    // if you want to add your own font, you can use the following as a template. To add font put the .ttf file in the resource/fonts folder.
-    // (Dont forget to add a resource.AddFile() in the sv_hitmarker.lua file)
+    // This is used to create all neccessary fonts
     for k, v in pairs(HITMARKER.fonts) do
         for _, j in ipairs(HITMARKER.fontSizes) do
             surface.CreateFont( k .. j, {
