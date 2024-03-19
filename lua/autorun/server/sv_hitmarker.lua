@@ -8,7 +8,11 @@ hook.Add("EntityTakeDamage", "SendDamageInfoToAttacker", function(target, dmgInf
     local damage = dmgInfo:GetDamage()
     if (not IsValid(attacker) || type(damage) != "number" || not attacker:IsPlayer() || (not target:IsNPC() && not target:IsPlayer())) then return end
 
+    data = {
+        damage = damage,
+        targetPos = target:GetPos()
+    }
     net.Start("ShareDamageToAttacker")
-    net.WriteString(tostring(damage))
+    net.WriteTable(data)
     net.Send(attacker)
 end)

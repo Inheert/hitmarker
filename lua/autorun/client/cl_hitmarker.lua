@@ -5,15 +5,23 @@ hook.Add("HUDShouldDraw", "HideDefaultCursor", function(name)
 end)
 
 net.Receive("ShareDamageToAttacker", function()
-    local damage = net.ReadString()
-    damage = math.Round(tonumber(damage), 0)
+    if (not IsValid(LocalPlayer())) then return end
 
-    if (not IsValid(LocalPlayer()) || damage < 0) then return end
+    local data = net.ReadTable()
+    local distance = LocalPlayer():GetPos():Distance(data.targetPos)
+    data.damage = math.Round(data.damage, 0)
+    data.targetPos.z = data.targetPos.z + 70
 
-    local color = GetHitMarkerColor(damage)
+    if (data.damage < 0) then return end
+
+    local color = GetHitMarkerColor(data.damage)
+
     surface.PlaySound(HITMARKER.hitSound)
-    HitMarkerDisplay(damage, color)
-    DamageDisplay(damage, color)
+    HitMarkerDisplay(data.damage, color)
+
+    if (distance < HITMARKER.damageMaxDistance) then
+        DamageDisplay(data, color, distance)
+    end
 end)
 
 function HitMarkerDisplay(damage, color)
@@ -36,11 +44,15 @@ function HitMarkerDisplay(damage, color)
     end
 end
 
-function DamageDisplay(damage, color)
+function DamageDisplay(data, color, distance)
     local randomId = RandomString(10)
     local hookName = "HITMARKERDamage" .. randomId
+    local pos = data.targetPos
+    local screenPos = pos:ToScreen()
     local xOffset = math.random(-80, 80)
     local yOffset = math.random(-50, 50)
+    local font = HITMARKER.font .. GetFontSize(distance)
+
     color = Color(color.r, color.g, color.b, color.a)
     
     hook.Add("HUDPaint", hookName, function()
@@ -49,9 +61,16 @@ function DamageDisplay(damage, color)
         color.a = math.Clamp(color.a - HITMARKER.damageAlphaDecay, 0, 255)
         yOffset = yOffset - 1
 
-        draw.SimpleText(tostring(damage), HITMARKER.font, center.x + xOffset, center.y + yOffset, color, 0, 0)
+        if screenPos.visible then
+            local text = "Bonjour, monde!"
 
-        if (color.a == 0) then
+            local x = screenPos.x 
+            local y = screenPos.y 
+            
+            draw.SimpleText(tostring(data.damage), font, x + xOffset, y + yOffset, color, 0, 0, fontSize)
+        end
+
+        if (color.a <= 0) then
             hook.Remove("HUDPaint", hookName)
         end
     end)
@@ -74,6 +93,20 @@ function GetHitMarkerColor(damage)
     return (Color(0, 0, 0, 255))
 end
 
+function GetFontSize(distance)
+    local i = 1
+    splitDistance = HITMARKER.damageMaxDistance / HITMARKER.fontSizesCount
+    while (i <= HITMARKER.fontSizesCount) do
+        if (distance <= splitDistance) then
+            return (HITMARKER.fontSizes[i])
+        else
+            splitDistance = splitDistance + HITMARKER.damageMaxDistance / HITMARKER.fontSizesCount
+            i = i + 1
+        end
+    end
+    return ("")
+end
+
 function RandomString(length)
     local charset = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890"
     math.randomseed(os.clock())
@@ -85,3 +118,6 @@ function RandomString(length)
     end
     return (table.concat(ret))
 end
+
+hook.Add("HUDPaint", "DrawMapText", function()
+end)

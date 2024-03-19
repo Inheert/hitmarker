@@ -1,15 +1,21 @@
 HITMARKER = HITMARKER or {}
 
 if (CLIENT) then
-    // For custom sound, add them in the sound/phx folder and modify the actual path.
-    // (you also need to define a new font in the CLIENT condition just below)
-    HITMARKER.hitSound = "phx/hitmarker.wav"
-    // Set the actual font for the damage info, see surface.CreateFont() below for more information.
-    HITMARKER.font = "font-60"
+    // Size of the hitmarker.
+    HITMARKER.size = 20
+
+    // Thickness of the hitmarker.
+    HITMARKER.thickness = 5
+
     // Delay before marker disappears, this work on alpha color (when alpha == 0 the hook is removed).
     HITMARKER.hitMarkerAlphaDecay = 10
+
     // Delay before damage text info disappears, this work on alpha color (when alpha == 0 the hook is removed).
     HITMARKER.damageAlphaDecay = 5
+
+    // Distance max to display damage
+    HITMARKER.damageMaxDistance = 1500
+
     // Color for each damage level (0 > 50, 51 > 100, 101 > 150, 151 > 250, 251+).
     HITMARKER.damageColor = {
         Color(150, 150, 150, 255),
@@ -18,34 +24,58 @@ if (CLIENT) then
         Color(255, 125, 5, 255),
         Color(255, 5, 5, 255)
     }
-    // Size of the hitmarker.
-    HITMARKER.size = 20
-    // Thickness of the hitmarker.
-    HITMARKER.thickness = 5
-    // Change this does nothing but keep it at 0, the table key is initalized to avoid non-existent key call.
-    HITMARKER.damage = 0
-    // Dont change this, this key is initialized to avoid unnecessary calculations.
-    HITMARKER.center = Vector( ScrW() / 2, ScrH() / 2, 0 )
+
+    // For custom sound, add them in the sound/phx folder and modify the actual path.
+    // (you also need to define a new font in the CLIENT condition just below)
+    HITMARKER.hitSound = "phx/hitmarker.wav"
+
+    // Set the actual font for the damage info, see surface.CreateFont() below for more information.
+    HITMARKER.font = "ninja"
+
+    // To add a new font just add it in this table, you can adjust the key as you want but the value must be the same as the name name in the font viewer.
+    HITMARKER.fonts = {
+        ninja = "Ninja Note"
+    }
+
+    // Used to define all font sizes, this key is scalable, for example if you have 3 values in it (20, 40, 60) so the damage display will work like this:
+    // if distance is in 1/3 maxDistance then damage text size = 20
+    // if distance is in 2/3 maxDistance then damage text size = 40
+    // if distance is in 3/3 maxDistance then damage text size = 60
+    // Fraction adapts to table size
+    HITMARKER.fontSizes = {100, 60, 40, 20}
+
+    // Just to avoid useless calculation
+    HITMARKER.fontSizesCount = #HITMARKER.fontSizes
 
     // if you want to add your own font, you can use the following as a template. To add font put the .ttf file in the resource/fonts folder.
     // (Dont forget to add a resource.AddFile() in the sv_hitmarker.lua file)
-    surface.CreateFont( "font-60", {
-        font = "Ninja Note", --  Use the font-name which is shown to you by your operating system Font Viewer, not the file name
-        extended = false,
-        size = 40,
-        weight = 500,
-        blursize = 0,
-        scanlines = 0,
-        antialias = true,
-        underline = false,
-        italic = false,
-        strikeout = false,
-        symbol = false,
-        rotary = false,
-        shadow = false,
-        additive = false,
-        outline = false,
-    })
+    for k, v in pairs(HITMARKER.fonts) do
+        for _, j in ipairs(HITMARKER.fontSizes) do
+            surface.CreateFont( k .. j, {
+                font = v, --  Use the font-name which is shown to you by your operating system Font Viewer, not the file name
+                extended = false,
+                size = j,
+                weight = 500,
+                blursize = 0,
+                scanlines = 0,
+                antialias = true,
+                underline = false,
+                italic = false,
+                strikeout = false,
+                symbol = false,
+                rotary = false,
+                shadow = false,
+                additive = false,
+                outline = false,
+            })
+        end
+    end
+
+    // Change this does nothing but keep it at 0, the table key is initalized to avoid non-existent key call.
+    HITMARKER.damage = 0
+
+    // Dont change this, this key is initialized to avoid unnecessary calculations.
+    HITMARKER.center = Vector( ScrW() / 2, ScrH() / 2, 0 )
 end
 
 // Add all neccessary files in the condition below.
