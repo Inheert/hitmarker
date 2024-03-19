@@ -18,8 +18,10 @@ if (CLIENT) then
         Color(255, 125, 5, 255),
         Color(255, 5, 5, 255)
     }
-    // Size of the hitmarker
-    HITMARKER.size = 10
+    // Size of the hitmarker.
+    HITMARKER.size = 20
+    // Thickness of the hitmarker.
+    HITMARKER.thickness = 5
     // Change this does nothing but keep it at 0, the table key is initalized to avoid non-existent key call.
     HITMARKER.damage = 0
     // Dont change this, this key is initialized to avoid unnecessary calculations.

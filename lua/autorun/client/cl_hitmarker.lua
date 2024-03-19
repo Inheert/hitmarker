@@ -21,12 +21,11 @@ function HitMarkerDisplay(damage, color)
     local randomId = RandomString(10)
     local hookName = "HITMARKERHit" .. randomId
     hook.Add("HUDPaint", hookName, function()
-        local center = HITMARKER.center
-        local size = HITMARKER.size
-    
+        local rotation = 45
+
         surface.SetDrawColor(color)
-        surface.DrawLine(center.x + size, center.y + size, center.x - size, center.y - size)
-        surface.DrawLine(center.x + size, center.y - size, center.x - size, center.y + size)
+        surface.DrawTexturedRectRotated(HITMARKER.center.x, HITMARKER.center.y, HITMARKER.size, HITMARKER.thickness, rotation)
+        surface.DrawTexturedRectRotated(HITMARKER.center.x, HITMARKER.center.y, HITMARKER.size, HITMARKER.thickness, -rotation)
     end)
 
     timer.Simple(HITMARKER.hitMarkerDisplayTime, function()
