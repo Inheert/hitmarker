@@ -25,6 +25,7 @@ function HitMarkerDisplay(damage, color)
         local rotation = 45
 
         color.a = math.Clamp(color.a - HITMARKER.hitMarkerAlphaDecay, 0, 255)
+
         surface.SetDrawColor(color)
         surface.DrawTexturedRectRotated(HITMARKER.center.x, HITMARKER.center.y, HITMARKER.size, HITMARKER.thickness, rotation)
         surface.DrawTexturedRectRotated(HITMARKER.center.x, HITMARKER.center.y, HITMARKER.size, HITMARKER.thickness, -rotation)
@@ -41,11 +42,12 @@ function DamageDisplay(damage, color)
     local xOffset = math.random(-80, 80)
     local yOffset = math.random(-50, 50)
     color = Color(color.r, color.g, color.b, color.a)
-
+    
     hook.Add("HUDPaint", hookName, function()
         local center = HITMARKER.center
 
         color.a = math.Clamp(color.a - HITMARKER.damageAlphaDecay, 0, 255)
+        yOffset = yOffset - 1
 
         draw.SimpleText(tostring(damage), HITMARKER.font, center.x + xOffset, center.y + yOffset, color, 0, 0)
 
