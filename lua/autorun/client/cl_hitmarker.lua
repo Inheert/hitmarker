@@ -73,5 +73,5 @@ function RandomString(length)
         r = math.random(1, #charset)
         table.insert(ret, charset:sub(r, r))
     end
-    return table.concat(ret)
+    return (table.concat(ret))
 end
