@@ -1,19 +1,23 @@
 HITMARKER =  {}
 
 if (CLIENT) then
+    // Set the min/max for font size.
+    HITMARKER.fontSizeRange = {20, 100}
+
     // Config damage texts by range of damage
     HITMARKER.damageConfigs = {
-        {range = {0, 50}, fontSize = 10, color = Color(150, 150, 150, 255)},
-        {range = {51, 100}, fontSize = 20, color = Color(4, 177, 251, 255)},
-        {range = {101, 150}, fontSize = 30, color = Color(251, 255, 10, 255)},
-        {range = {151, 250}, fontSize = 40, color = Color(255, 125, 5, 255)},
-        {range = {251}, fontSize = 50, color = Color(255, 5, 5, 255)}
+        {range = {0, 50}, fontSize = 20, color = Color(150, 150, 150, 255)},
+        {range = {51, 100}, fontSize = 30, color = Color(4, 177, 251, 255)},
+        {range = {101, 150}, fontSize = 50, color = Color(251, 255, 10, 255)},
+        {range = {151, 250}, fontSize = 70, color = Color(255, 125, 5, 255)},
+        {range = {251}, fontSize = 100, color = Color(255, 5, 5, 255)}
     }
 
     // Distance max to display damage.
     HITMARKER.maxRangeDisplay = 1500
 
     // For custom sound, add them in the sound/phx folder and modify the actual path.
+    // Don't forget to add the file on the SERVER part at the end of this file.
     HITMARKER.hitSound = "phx/hitmarker.wav"
 
     // Set the actual font for the damage info, see HITMARKER.fonts below for more information.
@@ -25,9 +29,6 @@ if (CLIENT) then
         ninja = "Ninja Note",
         badaboom = "BadaBoom BB"
     }
-
-    // Set the min/max for font size.
-    HITMARKER.fontSizeRange = {20, 50}
 
     // Delay before damage text info disappears, this work on alpha color (when alpha == 0 the hook is removed).
     HITMARKER.decay = 2

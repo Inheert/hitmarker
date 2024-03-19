@@ -9,7 +9,7 @@ net.Receive("ShareDamageToAttacker", function()
 
     local data = net.ReadTable()
     data.damage = math.Round(data.damage, 0)
-    data.targetPos.z = data.targetPos.z + 40
+    data.targetPos.z = data.targetPos.z
     data.distance = LocalPlayer():GetPos():Distance(data.targetPos)
     if (data.damage < 0) then return end
 
