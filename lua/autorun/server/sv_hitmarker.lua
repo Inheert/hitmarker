@@ -3,6 +3,7 @@ include("autorun/sh_hitmarker.lua")
 
 util.AddNetworkString("ShareDamageToAttacker")
 
+// This hook is triggered when an npc/player take damage, it send information about the shot (damage, and target position) to the attacker
 hook.Add("EntityTakeDamage", "SendDamageInfoToAttacker", function(target, dmgInfo)
     local attacker = dmgInfo:GetAttacker()
     local damage = dmgInfo:GetDamage()

@@ -1,4 +1,4 @@
-HITMARKER =  {}
+HITMARKER = HITMARKER or {}
 
 if (CLIENT) then
     // Set the min/max for font size.
