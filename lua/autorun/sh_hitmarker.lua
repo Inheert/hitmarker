@@ -6,10 +6,10 @@ if (CLIENT) then
     HITMARKER.hitSound = "phx/hitmarker.wav"
     // Set the actual font for the damage info, see surface.CreateFont() below for more information.
     HITMARKER.font = "font-60"
-    // Delay before marker disappears.
-    HITMARKER.hitMarkerDisplayTime = 0.1
-    // Delay before damage text info disappears.
-    HITMARKER.damageDisplayTime = 0.5
+    // Delay before marker disappears, this work on alpha color (when alpha == 0 the hook is removed).
+    HITMARKER.hitMarkerAlphaDecay = 10
+    // Delay before damage text info disappears, this work on alpha color (when alpha == 0 the hook is removed).
+    HITMARKER.damageAlphaDecay = 5
     // Color for each damage level (0 > 50, 51 > 100, 101 > 150, 151 > 250, 251+).
     HITMARKER.damageColor = {
         Color(150, 150, 150, 255),

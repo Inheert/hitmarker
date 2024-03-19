@@ -11,7 +11,6 @@ net.Receive("ShareDamageToAttacker", function()
     if (not IsValid(LocalPlayer()) || damage < 0) then return end
 
     local color = GetHitMarkerColor(damage)
-
     surface.PlaySound(HITMARKER.hitSound)
     HitMarkerDisplay(damage, color)
     DamageDisplay(damage, color)
@@ -20,29 +19,39 @@ end)
 function HitMarkerDisplay(damage, color)
     local randomId = RandomString(10)
     local hookName = "HITMARKERHit" .. randomId
+    color = Color(color.r, color.g, color.b, color.a)
+
     hook.Add("HUDPaint", hookName, function()
         local rotation = 45
 
+        color.a = math.Clamp(color.a - HITMARKER.hitMarkerAlphaDecay, 0, 255)
         surface.SetDrawColor(color)
         surface.DrawTexturedRectRotated(HITMARKER.center.x, HITMARKER.center.y, HITMARKER.size, HITMARKER.thickness, rotation)
         surface.DrawTexturedRectRotated(HITMARKER.center.x, HITMARKER.center.y, HITMARKER.size, HITMARKER.thickness, -rotation)
     end)
 
-    timer.Simple(HITMARKER.hitMarkerDisplayTime, function()
+    if (color.a == 0) then
         hook.Remove("HUDPaint", hookName)
-    end)
+    end
 end
 
 function DamageDisplay(damage, color)
     local randomId = RandomString(10)
     local hookName = "HITMARKERDamage" .. randomId
+    local xOffset = math.random(-80, 80)
+    local yOffset = math.random(-50, 50)
+    color = Color(color.r, color.g, color.b, color.a)
+
     hook.Add("HUDPaint", hookName, function()
         local center = HITMARKER.center
-        draw.SimpleText(tostring(damage), HITMARKER.font, center.x + 50, center.y, color, 0, 0)
-    end)
 
-    timer.Simple(HITMARKER.damageDisplayTime, function()
-        hook.Remove("HUDPaint", hookName)
+        color.a = math.Clamp(color.a - HITMARKER.damageAlphaDecay, 0, 255)
+
+        draw.SimpleText(tostring(damage), HITMARKER.font, center.x + xOffset, center.y + yOffset, color, 0, 0)
+
+        if (color.a == 0) then
+            hook.Remove("HUDPaint", hookName)
+        end
     end)
 end
 
