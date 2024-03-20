@@ -2,14 +2,14 @@ HITMARKER = HITMARKER or {}
 
 if (CLIENT) then
     // Set the min/max for font size.
-    HITMARKER.fontSizeRange = {20, 100}
+    HITMARKER.fontSizeRange = {40, 100}
 
     // Config damage texts by range of damage
     HITMARKER.damageConfigs = {
-        {range = {0, 50}, fontSize = 20, color = Color(150, 150, 150, 255)},
-        {range = {51, 100}, fontSize = 30, color = Color(4, 177, 251, 255)},
-        {range = {101, 150}, fontSize = 50, color = Color(251, 255, 10, 255)},
-        {range = {151, 250}, fontSize = 70, color = Color(255, 125, 5, 255)},
+        {range = {0, 50}, fontSize = 40, color = Color(150, 150, 150, 255)},
+        {range = {51, 100}, fontSize = 50, color = Color(4, 177, 251, 255)},
+        {range = {101, 150}, fontSize = 60, color = Color(251, 255, 10, 255)},
+        {range = {151, 250}, fontSize = 80, color = Color(255, 125, 5, 255)},
         {range = {251}, fontSize = 100, color = Color(255, 5, 5, 255)}
     }
 
@@ -31,12 +31,12 @@ if (CLIENT) then
     }
 
     // Delay before damage text info disappears, this work on alpha color (when alpha == 0 the hook is removed).
-    HITMARKER.decay = 2
+    HITMARKER.decay = 1
 
     // Range of damage positions on x and y axis.
     HITMARKER.damageOffset = {
-        x = {-80, 80},
-        y = {-50, 50}
+        x = {200, 400},
+        y = {-150, -500}
     }
 
     // Check if the fontSize key in HITMARKER.damageConfigs within HITMARKER.fontSizeRange

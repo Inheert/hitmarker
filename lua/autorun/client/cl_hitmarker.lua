@@ -63,6 +63,7 @@ function DamageDisplay(data, damageSettings)
         y = y + yOffset * (1 - data.distance / HITMARKER.maxRangeDisplay)
 
         yOffset = yOffset - 0.5
+        xOffset = xOffset  + 0.5
 
         color.a = math.Clamp(color.a - HITMARKER.decay, 0, 255)
 
