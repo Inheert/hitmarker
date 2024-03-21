@@ -4,13 +4,16 @@ if (CLIENT) then
     // Set the min/max for font size.
     HITMARKER.fontSizeRange = {40, 100}
 
-    // Config damage texts by range of damage
+    // Config damage texts by range of damage.
+    // The range determine the range of damage to apply font size, color, etc...
+    // Color attribute is used to set the text color.
+    // secondLayerColor is set for multiple font layer (used as an outline font)
     HITMARKER.damageConfigs = {
-        {range = {0, 50}, fontSize = 40, color = Color(150, 150, 150, 255)},
-        {range = {51, 100}, fontSize = 50, color = Color(4, 177, 251, 255)},
-        {range = {101, 150}, fontSize = 60, color = Color(251, 255, 10, 255)},
-        {range = {151, 250}, fontSize = 80, color = Color(255, 125, 5, 255)},
-        {range = {251}, fontSize = 100, color = Color(255, 5, 5, 255)}
+        {range = {0, 50}, fontSize = 40, color = Color(150, 150, 150, 255), secondLayerColor = Color(0, 0, 0, 255)},
+        {range = {51, 100}, fontSize = 50, color = Color(4, 177, 251, 255), secondLayerColor = Color(0, 0, 0, 255)},
+        {range = {101, 150}, fontSize = 60, color = Color(251, 255, 10, 255), secondLayerColor = Color(0, 0, 0, 255)},
+        {range = {151, 250}, fontSize = 80, color = Color(255, 125, 5, 255), secondLayerColor = Color(0, 0, 0, 255)},
+        {range = {251}, fontSize = 100, color = Color(255, 5, 5, 255), secondLayerColor = Color(0, 0, 0, 255)}
     }
 
     // Distance max to display damage.
@@ -21,13 +24,19 @@ if (CLIENT) then
     HITMARKER.hitSound = "phx/hitmarker.wav"
 
     // Set the actual font for the damage info, see HITMARKER.fonts below for more information.
-    HITMARKER.font = "badaboom"
+    HITMARKER.font = "kablam"
 
     // To add a new font just add it in this table, you can adjust the key as you want but the value must be the same as the font name in the font viewer.
     // You also need to add the file in the SERVER condition at the end of this file.
+    // If you need to add a font with 2 layers then define the second layer like this : fontnameunder.
+    // For example: if my font name is kablam then the second layer have to be call kablaunder.
     HITMARKER.fonts = {
         ninja = "Ninja Note",
-        badaboom = "BadaBoom BB"
+        badaboom = "BadaBoom BB",
+        komica = "Komyca 3D free version",
+        komigo = "Komigo 3D",
+        kablam = "Ka Blam",
+        kablamunder = "Ka Blam Under"
     }
 
     // Delay before damage text info disappears, this work on alpha color (when alpha == 0 the hook is removed).
@@ -63,6 +72,26 @@ if (CLIENT) then
             additive = false,
             outline = false,
         })
+        if (HITMARKER.fonts[HITMARKER.font .. "under"] != nil) then
+            surface.CreateFont( HITMARKER.font .. "under" .. i, {
+                font = HITMARKER.fonts[HITMARKER.font .. "under"], --  Use the font-name which is shown to you by your operating system Font Viewer, not the file name
+                extended = false,
+                size = i,
+                weight = 500,
+                blursize = 0,
+                scanlines = 0,
+                antialias = true,
+                underline = false,
+                italic = false,
+                strikeout = false,
+                symbol = false,
+                rotary = false,
+                shadow = false,
+                additive = false,
+                outline = false,
+            })
+            print(HITMARKER.font .. "under" .. i)
+        end
     end
 
     surface.CreateFont( HITMARKER.font .. "NOTFOUND", {
@@ -95,8 +124,12 @@ end
 // Add all neccessary files in the condition below.
 if (SERVER) then
     resource.AddFile("resource/fonts/njnaruto.ttf")
+    resource.AddFile("resource/fonts/komyca.ttf")
+    resource.AddFile("resource/fonts/komigo.ttf")
     resource.AddFile("resource/fonts/ninjanote.ttf")
     resource.AddFile("resource/fonts/badabb.ttf")
+    resource.AddFile("resource/fonts/kablam.ttf")
+    resource.AddFile("resource/fonts/kablamunder.ttf")
     resource.AddFile("sound/phx/hitmarker.wav")
     resource.AddFile("sound/phx/test.wav")
 end
