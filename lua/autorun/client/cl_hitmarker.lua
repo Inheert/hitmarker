@@ -37,6 +37,11 @@ function DamageDisplay(data, damageSettings)
     local color = Color(damageSettings.color.r, damageSettings.color.g, damageSettings.color.b, damageSettings.color.a)
     local underColor = Color(damageSettings.secondLayerColor.r, damageSettings.secondLayerColor.g, damageSettings.secondLayerColor.b, damageSettings.secondLayerColor.a)
     
+    local fontSize = GetFontSizeFromDistance(damageSettings.fontSize, data.distance)
+
+    local damageFont = HITMARKER.font .. fontSize
+    local fontOverlay = HITMARKER.font .. "under" .. fontSize
+
     if (HITMARKER.damageOffset["x"][1] != HITMARKER.damageOffset["x"][2]) then
         xOffset = math.random(HITMARKER.damageOffset["x"][1], HITMARKER.damageOffset["x"][2])
     else
@@ -49,10 +54,6 @@ function DamageDisplay(data, damageSettings)
         yOffset = HITMARKER.damageOffset["y"][1]
     end
 
-    local fontSize = GetFontSizeFromDistance(damageSettings.fontSize, data.distance)
-    local damageFont = HITMARKER.font .. fontSize
-    local fontOverlay = HITMARKER.font .. "under" .. fontSize
-    print(HITMARKER.fonts[HITMARKER.font .. "under"])
     hook.Add("HUDPaint", hookName, function()
         local pos = data.targetPos
         local screenPos = pos:ToScreen()

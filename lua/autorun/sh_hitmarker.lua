@@ -90,7 +90,6 @@ if (CLIENT) then
                 additive = false,
                 outline = false,
             })
-            print(HITMARKER.font .. "under" .. i)
         end
     end
 
