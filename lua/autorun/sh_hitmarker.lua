@@ -74,7 +74,7 @@ if (CLIENT) then
         })
         if (HITMARKER.fonts[HITMARKER.font .. "under"] != nil) then
             surface.CreateFont( HITMARKER.font .. "under" .. i, {
-                font = HITMARKER.fonts[HITMARKER.font .. "under"], --  Use the font-name which is shown to you by your operating system Font Viewer, not the file name
+                font = HITMARKER.fonts[HITMARKER.font .. "under"],
                 extended = false,
                 size = i,
                 weight = 500,
@@ -94,7 +94,7 @@ if (CLIENT) then
     end
 
     surface.CreateFont( HITMARKER.font .. "NOTFOUND", {
-        font = HITMARKER.fonts[HITMARKER.font], --  Use the font-name which is shown to you by your operating system Font Viewer, not the file name
+        font = HITMARKER.fonts[HITMARKER.font],
         extended = false,
         size = 0,
         weight = 500,
@@ -111,13 +111,12 @@ if (CLIENT) then
         outline = false,
     })
 
-    HITMARKER.confElementCount = #HITMARKER.damageConfigs
-
     // Change this does nothing but keep it at 0, the table key is initalized to avoid non-existent key call.
     HITMARKER.damage = 0
 
     // Dont change this, this key is initialized to avoid unnecessary calculations.
     HITMARKER.center = Vector( ScrW() / 2, ScrH() / 2, 0 )
+    HITMARKER.confElementCount = #HITMARKER.damageConfigs
 end
 
 // Add all neccessary files in the condition below.
