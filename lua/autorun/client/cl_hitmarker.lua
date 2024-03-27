@@ -20,7 +20,7 @@ end)
 // This function is responsible for displaying damage numbers on the screen with dynamic positioning and fading effects based on distance. 
 // It calculates the position of the damage display relative to the target position and adjusts the font size according to the distance. 
 // Finally, it gradually reduces the alpha value of the color to simulate fading out over time.
-function DamageDisplay(data, damageSettings)
+local function DamageDisplay(data, damageSettings)
     local randomId = RandomString(10)
     local hookName = "HITMARKERDamage" .. randomId
 
@@ -86,7 +86,7 @@ function DamageDisplay(data, damageSettings)
 end
 
 // This function, GetDamageSettings, retrieves the appropriate damage settings based on the provided damage value
-function GetDamageSettings(damage)
+local function GetDamageSettings(damage)
     for k, v in ipairs(HITMARKER.damageConfigs) do
         if (k == HITMARKER.confElementCount) then
             return (v)
@@ -98,7 +98,7 @@ function GetDamageSettings(damage)
 end
 
 // Used to generate a random id for each DrawHUD damage hook
-function RandomString(length)
+local function RandomString(length)
     local charset = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM1234567890"
     math.randomseed(os.clock())
     local ret = {}
@@ -111,6 +111,6 @@ function RandomString(length)
 end
 
 // This function calculates the font size based on the given size and the distance from the target
-function GetFontSizeFromDistance(size, distance)
+local function GetFontSizeFromDistance(size, distance)
     return (math.Round(math.Clamp(size * (1 - distance / HITMARKER.maxRangeDisplay), HITMARKER.fontSizeRange[1], HITMARKER.fontSizeRange[2]), 0))
 end

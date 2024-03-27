@@ -44,8 +44,8 @@ if (CLIENT) then
 
     // Range of damage positions on x and y axis.
     HITMARKER.damageOffset = {
-        x = {200, 400},
-        y = {-150, -500}
+        x = {100, 200},
+        y = {-150, -250}
     }
 
     // Check if the fontSize key in HITMARKER.damageConfigs within HITMARKER.fontSizeRange
